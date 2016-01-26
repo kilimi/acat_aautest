@@ -81,7 +81,7 @@ void displayPose(MsgT out){
 		pcl::PointCloud<PointT>::Ptr final(new pcl::PointCloud<PointT>());
 
 		tf::Transform transform;
-		tf::transformMsgToTF(out.response.poses[i], transform);
+		tf::transformMsgToTF(out.response.vizualizerPoses[i], transform);
 
 		Eigen::Matrix4f m_init, m;
 		transformAsMatrix(transform, m_init);
@@ -89,12 +89,7 @@ void displayPose(MsgT out){
 		m_init(12) = m_init(12)/1000;
 		m_init(13) = m_init(13)/1000;
 		m_init(14) = m_init(14)/1000;
-
-		m(0) = -m_init(10);    m(4) = m_init(9);    m(8) = m_init(8);
-		m(1) = m_init(6);    m(5) = -m_init(5);    m(9) = -m_init(4);
-		m(2) = -m_init(2);    m(6) = m_init(1);    m(10) = m_init(0);
-		m(3) = 0;    m(7) = 0;    m(11) = 0;
-		m(12) = m_init(12);    m(13) = m_init(13);    m(14) = m_init(14);  m(15) = 1;
+		m = m_init;
 
 
 		pcl::transformPointCloud(*object, *final, m);
@@ -103,7 +98,6 @@ void displayPose(MsgT out){
 		viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.x, color.y, color.z, name.str());
 		viewer->addText(name.str(), 0, 0 + i*30, color.x, color.y, color.z, name.str());
 	}
-
 
 	while (!viewer->wasStopped ())
 	{
@@ -116,7 +110,8 @@ void displayPose(MsgT out){
 
 
 
-void printResults(MsgT msgglobal){
+bool printResults(MsgT msgglobal){
+       // if (msgglobal.response.pose_value.size() == 0) return false;
 	std::cout << "number of ints:" << msgglobal.response.labels_int.size() << std::endl;
 	std::cout << "number of pose_value:" << msgglobal.response.pose_value.size() << std::endl;
 	for(size_t n = 0; n < msgglobal.response.pose_value.size(); n++) {
@@ -124,7 +119,15 @@ void printResults(MsgT msgglobal){
 		pcl::console::print_warn("Pose:\n");
 		std::cout << msgglobal.response.poses[n] << std::endl;
 	}
+
+
+    pcl::PointCloud<PointT>::Ptr scene(new pcl::PointCloud<PointT>());
+
+    pcl::fromROSMsg(msgglobal.response.scene, *scene);
+    if (scene->size() > 0 ) pcl::io::savePCDFile("curr_scene.pcd", *scene);
+    else pcl::console::print_error("curr scene is zero!");
 	displayPose(msgglobal);
+	return true;
 }
 
 void specifyObject(std::string& input) {
@@ -132,8 +135,9 @@ void specifyObject(std::string& input) {
 		ROS_INFO("Subscribing to detection service...");
 		ros::service::waitForService("/inSceneDetector/detect");
 
+			
 		msgglobal.request.scenario = "save_point_clouds";
-
+//for (int i = 0; i < 100; i++)
 		if(global.call(msgglobal)) {
 			printResults(msgglobal);
 		}
@@ -145,7 +149,10 @@ void specifyObject(std::string& input) {
 		msgglobal.request.scenario = "detect_rotorcaps_on_coveyour_belt";
 
 		if(global.call(msgglobal)) {
-			printResults(msgglobal);
+while (msgglobal.response.pose_value.size() == 0) global.call(msgglobal);			
+			printResults(msgglobal); 
+			//global.call(msgglobal) ;
+				
 		}
 	}
 	else if(!input.compare("3")) {
@@ -158,6 +165,66 @@ void specifyObject(std::string& input) {
 			printResults(msgglobal);
 		}
 	}
+    else if(!input.compare("4")) {
+        ROS_INFO("Subscribing to detection service...");
+        ros::service::waitForService("/inSceneDetector/detect");
+        msgglobal.request.scenario = "detect_rotorcaps_on_table";
+
+        if(global.call(msgglobal)) {
+            while (msgglobal.response.pose_value.size() == 0) global.call(msgglobal); 
+printResults(msgglobal);
+        }
+    }
+    else if(!input.compare("6")) {
+        ROS_INFO("Subscribing to detection service...");
+        ros::service::waitForService("/inSceneDetector/detect");
+        msgglobal.request.scenario = "detect_rotorcaps_on_the_fixture";
+
+        if(global.call(msgglobal)) {
+            //while (msgglobal.response.poses.size() == 0) global.call(msgglobal);
+           printResults(msgglobal);
+        }
+    }
+   else if(!input.compare("7")) {
+        ROS_INFO("Subscribing to detection service...");
+        ros::service::waitForService("/inSceneDetector/detect");
+        msgglobal.request.scenario = "detect_rotoraxles";
+
+        if(global.call(msgglobal)) {
+            //while (msgglobal.response.poses.size() == 0) global.call(msgglobal);
+           printResults(msgglobal);
+        }
+    }
+    else if(!input.compare("8")) {
+        ROS_INFO("Subscribing to detection service...");
+        ros::service::waitForService("/inSceneDetector/detect");
+        msgglobal.request.scenario = "detect_ring";
+
+        if(global.call(msgglobal)) {
+            //while (msgglobal.response.poses.size() == 0) global.call(msgglobal);
+           printResults(msgglobal);
+        }
+    }
+    else if(!input.compare("9")) {
+        ROS_INFO("Subscribing to detection service...");
+        ros::service::waitForService("/inSceneDetector/detect");
+        msgglobal.request.scenario = "detect_magnet";
+
+        if(global.call(msgglobal)) {
+            //while (msgglobal.response.poses.size() == 0) global.call(msgglobal);
+           printResults(msgglobal);
+        }
+    }
+ else if(!input.compare("5")) {
+        ROS_INFO("Subscribing to detection service...");
+        ros::service::waitForService("/inSceneDetector/detect");
+        msgglobal.request.scenario = "detect_screen_shot";
+
+        if(global.call(msgglobal)) {
+            printResults(msgglobal);
+        }
+    }
+//------------------------------------------------------------------
 	unsigned found = folder.find_last_of("/\\");
 	folder = folder.substr(0, found);
 }
@@ -184,13 +251,16 @@ int main(int argc, char **argv)
 
 	global = nodeHandle.serviceClient<MsgT>("/inSceneDetector/detect");
 
-
-
 	cout << "==========================================================================================" << endl;
 	cout << "        Type 'quit' to close                                                              " << endl;
 	cout << "        1 - save carmine & || stereo point clouds into files carmine_PC.pcd stereo_PC.pcd " << endl;
 	cout << "        2 - detect conveyour belt and rotorcaps                                           " << endl;
 	cout << "        3 - detect only rotorcaps (conveyour belt position from '2' is used)              " << endl;
+        cout << "        4 - detect table and rotorcaps                                                    " << endl;
+        cout << "        6 - detect rotorcaps on fixture                                                   " << endl;
+  	cout << "        7 - detect rotoraxles                                                             " << endl;
+  	cout << "        8 - detect ring                                                                   " << endl;
+  	cout << "        9 - detect magnet                                                                 " << endl;
 	cout << "==========================================================================================" << endl;
 
 	while (ros::ok()) {
