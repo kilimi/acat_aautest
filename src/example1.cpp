@@ -126,7 +126,8 @@ bool printResults(MsgT msgglobal){
     pcl::fromROSMsg(msgglobal.response.scene, *scene);
     if (scene->size() > 0 ) pcl::io::savePCDFile("curr_scene.pcd", *scene);
     else pcl::console::print_error("curr scene is zero!");
-	displayPose(msgglobal);
+	if (msgglobal.response.poses.size() != 0) displayPose(msgglobal);
+	else std::cout << "no poses found\n";
 	return true;
 }
 

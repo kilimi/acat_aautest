@@ -1,0 +1,168 @@
+Calling lilly stuff
+
+rosservice call /sdu/object_detector "cloud:
+  header:
+    seq: 0
+    stamp: {secs: 0, nsecs: 0}
+    frame_id: ''
+  height: 0
+  width: 0
+  fields:
+  - {name: '', offset: 0, datatype: 0, count: 0}
+  is_bigendian: false
+  point_step: 0
+  row_step: 0
+  data: ''
+  is_dense: false
+objects: ['rotorcaps_on_conveyour']
+visualize: false
+table: false
+threshold: 0.0
+cothres: 0.0"
+
+
+
+
+rosservice call /sdu/object_detector "cloud:
+  header:
+    seq: 0
+    stamp: {secs: 0, nsecs: 0}
+    frame_id: ''
+  height: 0
+  width: 0
+  fields:
+  - {name: '', offset: 0, datatype: 0, count: 0}
+  is_bigendian: false
+  point_step: 0
+  row_step: 0
+  data: ''
+  is_dense: false
+objects: ['rotorcaps']
+visualize: false
+table: false
+threshold: 0.0
+cothres: 0.0" 
+
+translation: 
+      x: 
+      y: -0.00679199881349
+      z: 0.861697561426
+    rotation: 
+      x: -0.236364562152
+      y: 0.788454906983
+      z: 0.17068609822
+      w: -0.541605868923
+translation: 
+      x: -0.0838982772774
+      y: 0.0293489387774
+      z: 0.809203236705
+    rotation: 
+      x: -0.273817914868
+      y: 0.87285513449
+      z: -0.136758918743
+      w: 0.380058780422
+
+
+
+rosservice call /grasp_selector/select_grasps "object_id: 'SQFlexCap'
+object_types: ['SQFlexCap']
+object_pose:
+  translation: {x: -0.0594105211985, y: -0.00679199881349, z: 0.861697561426}
+  rotation: {x: -0.236364562152, y:  0.788454906983, z: 0.17068609822, w: -0.541605868923}
+cloud_external:
+- header:
+    seq: 0
+    stamp: {secs: 0, nsecs: 0}
+    frame_id: ''
+  height: 0
+  width: 0
+  fields:
+  - {name: '', offset: 0, datatype: 0, count: 0}
+  is_bigendian: false
+  point_step: 0
+  row_step: 0
+  data: ''
+  is_dense: false
+sensor_frame_name: ''
+max_nr_grasps: 0
+max_time: 0" 
+
+translation: 
+  x: -0.0364876
+  y: 0.0223286
+  z: 0.824702
+rotation: 
+  x: 0.183526
+  y: -0.646216
+  z: -0.22932
+  w: 0.704369
+    translation: 
+      x: -0.0839359749446
+      y: 0.0208177404202
+      z: 0.821010369314
+    rotation: 
+      x: -0.292188323007
+      y: 0.946976140789
+      z: -0.0142813217996
+      w: 0.132884256181
+translation: 
+      x: -0.0797188779549
+      y: 0.0226786027136
+      z: 0.822601493897
+    rotation: 
+      x: -0.297992122146
+      y: 0.943019333768
+      z: -0.0550503696518
+      w: 0.137421591787
+    translation: 
+      x: -0.0431674024132
+      y: 0.285363836808
+      z: 0.929701393115
+    rotation: 
+      x: -0.0662664810174
+      y: 0.864993704074
+      z: 0.377542117271
+      w: -0.323815680491
+    translation: 
+      x: -0.0515242347627
+      y: -0.019131518992
+      z: 0.873649042335
+    rotation: 
+      x: 0.94787973525
+      y: -0.0296273718691
+      z: 0.127553977297
+      w: -0.290475850698
+
+
+
+
+rosservice call /grasp_selector/select_grasps "object_id: 'SQFlexCap'
+object_types: ['SQFlexCap']
+object_pose:
+    translation: 
+      x: -0.0797188779549
+      y: 0.0226786027136
+      z: 0.822601493897
+    rotation: 
+      x: -0.297992122146
+      y: 0.943019333768
+      z: -0.0550503696518
+      w: 0.137421591787
+cloud_external:
+- header:
+    seq: 0                                      
+    stamp: {secs: 0, nsecs: 0}
+    frame_id: ''
+  height: 0
+  width: 0
+  fields:
+  - {name: '', offset: 0, datatype: 0, count: 0}
+  is_bigendian: false
+  point_step: 0
+  row_step: 0
+  data: ''
+  is_dense: false
+sensor_frame_name: ''
+max_nr_grasps: 0
+max_time: 0" 
+
